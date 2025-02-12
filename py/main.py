@@ -213,15 +213,21 @@ class animix:
                 continue
 
         # Main gacha process
+        threshold = 10
+        if not self.config.get("tuyul", False):
+            threshold = self.config.get("gacha_threshold", 10)
+
+        initial_token_super = self.token_super
+
         while True:
-            if self.token_reguler > 0:
+            if self.token_reguler >= threshold:
                 req_url = f"{self.BASE_URL}pet/dna/gacha"
                 headers = {**self.HEADERS, "Tg-Init-Data": self.token}
-                payload = {"amount": 1, "is_super": False}
-            elif self.token_super > 0:
+                payload = {"amount": 10, "is_super": False}
+            elif self.token_super >= 10 and initial_token_super >= 200:
                 req_url = f"{self.BASE_URL}pet/dna/gacha"
                 headers = {**self.HEADERS, "Tg-Init-Data": self.token}
-                payload = {"amount": 1, "is_super": True}
+                payload = {"amount": 10, "is_super": True}
             else:
                 self.log("🚫 No gacha points remaining. Unable to continue.", Fore.RED)
                 break
@@ -410,7 +416,10 @@ class animix:
                                         )
                                         used_ids.add(dad["item_id"])
                                         used_ids.add(mom["item_id"])
-                                        break
+                                        if not self.config.get("tuyul", False):
+                                            return
+                                        else:
+                                            break
                                     else:
                                         message = mix_data.get("message", "No message provided.")
                                         self.log(
@@ -600,9 +609,15 @@ class animix:
 
             # Step 4: Assign pets to missions that are eligible for pet deployment
             self.log("🔍 Filtering missions and assigning pets...", Fore.CYAN)
+            missions = missions[::-1]
+            # print(missions)
             for mission in missions:
                 mission_id = mission.get("mission_id")
                 if not mission_id:
+                    continue
+                
+                if mission_id == 67:
+                    self.log(f"⚠️ Mission {mission_id} skipped (dont have pet bro).", Fore.YELLOW)
                     continue
 
                 # Skip missions yang sudah punya pet atau masih bisa diklaim
@@ -630,6 +645,9 @@ class animix:
                         pet for pet in pets
                         if busy_pets.get(pet.get("pet_id"), 0) < pet.get("amount", 1)
                     ]
+                    # print(available_pets)
+                    available_pets.sort(key=lambda pet: pet.get("star", 0))
+                    # print(available_pets)
                     pet_ids = []
 
                     # Pilih pet untuk setiap slot sesuai requirement
@@ -921,31 +939,31 @@ class animix:
                     if "result" in pets_data and isinstance(pets_data["result"], list):
                         pets = pets_data["result"]
 
-                        # Step 2.1: Upgrade eligible pets (4-star and above with amount > 1)
-                        self.log("⚙️ Checking for pets eligible for upgrade...", Fore.CYAN)
-                        for pet in pets:
-                            if pet.get("star", 0) >= 4 and pet.get("amount", 0) > 1:
-                                pet_id = pet.get("pet_id")
-                                payload = {"pet_id": pet_id}
-                                response = requests.get(f"{req_url_upgrade_check}?pet_id={pet_id}", headers=headers, json=payload)
-                                response.raise_for_status()
-                                upgrade_data = response.json()
+                        # # Step 2.1: Upgrade eligible pets (4-star and above with amount > 1)
+                        # self.log("⚙️ Checking for pets eligible for upgrade...", Fore.CYAN)
+                        # for pet in pets:
+                        #     if pet.get("star", 0) >= 4 and pet.get("amount", 0) > 1:
+                        #         pet_id = pet.get("pet_id")
+                        #         payload = {"pet_id": pet_id}
+                        #         response = requests.get(f"{req_url_upgrade_check}?pet_id={pet_id}", headers=headers, json=payload)
+                        #         response.raise_for_status()
+                        #         upgrade_data = response.json()
 
-                                if "result" in upgrade_data and isinstance(upgrade_data["result"], dict):
-                                    required = upgrade_data["result"].get("required", [])[0]
-                                    materials = upgrade_data["result"].get("materials", [])[0]
+                        #         if "result" in upgrade_data and isinstance(upgrade_data["result"], dict):
+                        #             required = upgrade_data["result"].get("required", [])[0]
+                        #             materials = upgrade_data["result"].get("materials", [])[0]
 
-                                    if required["available"] >= required["amount"] and materials["available"] >= materials["amount"]:
-                                        self.log(f"🔧 Upgrading pet ID {pet_id}...", Fore.CYAN)
-                                        response = requests.post(req_url_upgrade, headers=headers, json=payload)
-                                        response.raise_for_status()
-                                        upgrade_result = response.json()
+                        #             if required["available"] >= required["amount"] and materials["available"] >= materials["amount"]:
+                        #                 self.log(f"🔧 Upgrading pet ID {pet_id}...", Fore.CYAN)
+                        #                 response = requests.post(req_url_upgrade, headers=headers, json=payload)
+                        #                 response.raise_for_status()
+                        #                 upgrade_result = response.json()
 
-                                        if "result" in upgrade_result and upgrade_result["result"].get("status", False):
-                                            new_level = upgrade_result["result"].get("level")
-                                            self.log(f"✅ Pet ID {pet_id} upgraded to Level {new_level}", Fore.GREEN)
-                                        else:
-                                            self.log(f"🚫 Failed to upgrade pet ID {pet_id}", Fore.RED)
+                        #                 if "result" in upgrade_result and upgrade_result["result"].get("status", False):
+                        #                     new_level = upgrade_result["result"].get("level")
+                        #                     self.log(f"✅ Pet ID {pet_id} upgraded to Level {new_level}", Fore.GREEN)
+                        #                 else:
+                        #                     self.log(f"🚫 Failed to upgrade pet ID {pet_id}", Fore.RED)
 
                         # Step 2.2: Determine the 3 best pets based on total attribute scores
                         best_pets = sorted(
@@ -1187,12 +1205,12 @@ if __name__ == "__main__":
         # Task execution with clear log messages
         ani.log("🛠️ Starting task execution...")
         tasks = {
-            "achievements": "🏆 Achievements",
-            "mission": "📜 Missions",
-            "quest": "🗺️ Quests",
+            "claim_pass": "🎟️ Claiming Pass Rewards",
             "gacha": "🎰 Gacha",
             "mix": "🧬 DNA Mixing",
-            "claim_pass": "🎟️ Claiming Pass Rewards",
+            "mission": "📜 Missions",
+            "quest": "🗺️ Quests",
+            "achievements": "🏆 Achievements",
             "pvp": "⚔️ PvP Battles",
         }
 
