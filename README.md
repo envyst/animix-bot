@@ -56,7 +56,7 @@ Stay tuned for more updates! ✨
 Start using Animix by registering through the following link:
 
 <div align="center">
-  <a href="https://t.me/animix_game_bot?startapp=3lsLj56QYJx6" target="_blank">
+  <a href="https://t.me/animix_game_bot?startapp=du9f0it0ujJ6" target="_blank">
     <img src="https://img.shields.io/static/v1?message=Animix&logo=telegram&label=&color=2CA5E0&logoColor=white&labelColor=&style=for-the-badge" height="25" alt="telegram logo" />
   </a>
 </div>
@@ -67,16 +67,18 @@ Start using Animix by registering through the following link:
 
 | **Function**           | **Description**                          | **Default** |
 | ---------------------- | ---------------------------------------- | ----------- |
-| `gacha`                | Automate gacha pulls                     | `True`      |
-| `achievements`         | Claim achievements automatically         | `True`      |
+| `claim_pass`           | Claim pass rewards automatically         | `True`      |
+| `gacha`                | Automate gacha pulls With Threshold      | `True`      |
 | `mix`                  | Automate DNA mixing                      | `True`      |
 | `mission`              | Complete missions automatically          | `True`      |
 | `quest`                | Automate quest completion                | `True`      |
-| `claim_pass`           | Claim pass rewards automatically         | `True`      |
+| `achievements`         | Claim achievements automatically         | `True`      |
 | `pvp`                  | Engage in PvP battles automatically      | `True`      |
 | `proxy`                | Enable/Disable proxy usage               | `False`     |
 | `delay_loop`           | Delay before the next loop (seconds)     | `3000`      |
 | `delay_account_switch` | Delay between account switches (seconds) | `10`        |
+| `gacha_threshold`      | Limit Token Will Not be Used for gacha   | `210`       |
+| `tuyul`                | Will Gacha all token and Mix All         | `False`     |
 
 ---
 
@@ -86,25 +88,30 @@ Start using Animix by registering through the following link:
    Copy the project to your local machine:
 
    ```bash
-   git clone https://github.com/livexords-nw/Animix-bot.git
+   git clone https://github.com/envyst/animix-bot.git
    ```
 
 2. **Navigate to the Project Folder**\
    Move to the project directory:
 
    ```bash
-   cd Animix-bot
+   cd Animix-bot/py/
    ```
 
 3. **Install Dependencies**\
    Install the required libraries:
 
    ```bash
+   python3 -m venv venv
+   source venv/bin/activate # WINDOWS source venv/Scripts/activate 
+   ```
+   ```bash
    pip install -r requirements.txt
    ```
 
 4. **Configure Query**\
    Create a `query.txt` file and add your Animix query data.
+   `query_id=...........` (Need Inspect)
 
 5. **Set Up Proxy (Optional)**\
    To use a proxy, create a `proxy.txt` file and add proxies in the format:
@@ -118,7 +125,7 @@ Start using Animix by registering through the following link:
    Execute the bot using the following command:
 
    ```bash
-   python main.py
+   python3 main.py
    ```
 
 ---
