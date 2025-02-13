@@ -1,7 +1,7 @@
 {
   "claim_pass": true,
   "gacha": true,
-  "mix": true,
+  "mix": false,
   "mission": true,
   "quest": true,
   "achievements": true,
