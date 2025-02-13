@@ -102,8 +102,8 @@ Start using Animix by registering through the following link:
    Install the required libraries:
 
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate # WINDOWS source venv/Scripts/activate 
+   python3 -m venv venv # WINDOWS : python -m venv venv
+   source venv/bin/activate # WINDOWS .\venv\Scripts\activate 
    ```
    ```bash
    pip install -r requirements.txt
@@ -125,7 +125,7 @@ Start using Animix by registering through the following link:
    Execute the bot using the following command:
 
    ```bash
-   python3 main.py
+   python3 main.py # WINDOWS : python main.py
    ```
 
 ---
