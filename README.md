@@ -95,7 +95,7 @@ Start using Animix by registering through the following link:
    Move to the project directory:
 
    ```bash
-   cd Animix-bot/py/
+   cd animix-bot/py/
    ```
 
 3. **Install Dependencies**\
