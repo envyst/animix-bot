@@ -596,9 +596,9 @@ class animix:
                     self.log(f"⚠️ Mission {mission_id} skipped (still in progress).", Fore.YELLOW)
                     continue
 
-                if mission_id == "67":
-                    self.log(f"⚠️ Mission {mission_id} skipped (dont have pet bro).", Fore.YELLOW)
-                    continue
+                # if mission_id == "67":
+                #     self.log(f"⚠️ Mission {mission_id} skipped (dont have pet bro).", Fore.YELLOW)
+                #     continue
 
 
                 # Bangun daftar requirement pet dari mission.json
