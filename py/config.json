@@ -7,8 +7,8 @@
   "achievements": true,
   "pvp": true,
   "proxy": false,
-  "delay_loop": 3615,
+  "delay_loop": 1800,
   "delay_account_switch": 10,
-  "gacha_threshold": 210,
+  "gacha_threshold": 10,
   "tuyul": false
 }
