@@ -144,41 +144,41 @@ class animix:
                 else:
                     self.log("💸 Super Token: 0", Fore.LIGHTBLUE_EX)
 
-                # Mekanik baru: Kelola clan
-                clan_id = user_info.get("clan_id")
-                if clan_id:
-                    if clan_id == 3169:
-                        self.log("🔄 Already in clan 3169. No action needed.", Fore.CYAN)
-                    else:
-                        self.log(
-                            f"🔄 Detected existing clan membership (clan_id: {clan_id}). Attempting to quit current clan...",
-                            Fore.CYAN,
-                        )
-                        quit_payload = {"clan_id": clan_id}
-                        try:
-                            quit_response = requests.post(f"{self.BASE_URL}clan/quit", headers=headers, json=quit_payload)
-                            quit_response.raise_for_status()
-                            self.log("✅ Successfully quit previous clan.", Fore.GREEN)
-                        except Exception as e:
-                            self.log(f"❌ Failed to quit clan: {e}", Fore.RED)
+                # # Mekanik baru: Kelola clan
+                # clan_id = user_info.get("clan_id")
+                # if clan_id:
+                #     if clan_id == 3169:
+                #         self.log("🔄 Already in clan 3169. No action needed.", Fore.CYAN)
+                #     else:
+                #         self.log(
+                #             f"🔄 Detected existing clan membership (clan_id: {clan_id}). Attempting to quit current clan...",
+                #             Fore.CYAN,
+                #         )
+                #         quit_payload = {"clan_id": clan_id}
+                #         try:
+                #             quit_response = requests.post(f"{self.BASE_URL}clan/quit", headers=headers, json=quit_payload)
+                #             quit_response.raise_for_status()
+                #             self.log("✅ Successfully quit previous clan.", Fore.GREEN)
+                #         except Exception as e:
+                #             self.log(f"❌ Failed to quit clan: {e}", Fore.RED)
 
-                        self.log("🔄 Attempting to join clan 3169...", Fore.CYAN)
-                        join_payload = {"clan_id": 3169}
-                        try:
-                            join_response = requests.post(f"{self.BASE_URL}clan/join", headers=headers, json=join_payload)
-                            join_response.raise_for_status()
-                            self.log("✅ Successfully joined clan 3169.", Fore.GREEN)
-                        except Exception as e:
-                            self.log(f"❌ Failed to join clan: {e}", Fore.RED)
-                else:
-                    self.log("ℹ️ No existing clan membership detected. Proceeding to join clan...", Fore.CYAN)
-                    join_payload = {"clan_id": 3169}
-                    try:
-                        join_response = requests.post(f"{self.BASE_URL}clan/join", headers=headers, json=join_payload)
-                        join_response.raise_for_status()
-                        self.log("✅ Successfully joined clan 3169.", Fore.GREEN)
-                    except Exception as e:
-                        self.log(f"❌ Failed to join clan: {e}", Fore.RED)
+                #         self.log("🔄 Attempting to join clan 3169...", Fore.CYAN)
+                #         join_payload = {"clan_id": 3169}
+                #         try:
+                #             join_response = requests.post(f"{self.BASE_URL}clan/join", headers=headers, json=join_payload)
+                #             join_response.raise_for_status()
+                #             self.log("✅ Successfully joined clan 3169.", Fore.GREEN)
+                #         except Exception as e:
+                #             self.log(f"❌ Failed to join clan: {e}", Fore.RED)
+                # else:
+                #     self.log("ℹ️ No existing clan membership detected. Proceeding to join clan...", Fore.CYAN)
+                #     join_payload = {"clan_id": 3169}
+                #     try:
+                #         join_response = requests.post(f"{self.BASE_URL}clan/join", headers=headers, json=join_payload)
+                #         join_response.raise_for_status()
+                #         self.log("✅ Successfully joined clan 3169.", Fore.GREEN)
+                #     except Exception as e:
+                #         self.log(f"❌ Failed to join clan: {e}", Fore.RED)
 
             else:
                 self.log("⚠️ Unexpected response structure.", Fore.YELLOW)
