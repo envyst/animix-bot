@@ -649,6 +649,7 @@ class animix:
             busy_pets = {}
 
             missions = missions[::-1]
+            # print(missions)
             for mission in missions:
                 mission_id = mission.get("mission_id")
                 mission_end_time = mission.get("end_time")
@@ -1078,7 +1079,7 @@ class animix:
                     else:
                         self.log("ℹ️ No unclaimed rewards info available. Skipping reward claim.", Fore.YELLOW)
 
-                    if tickets <= 0 or tier_name == "Champion":
+                    if tickets <= 0:
                         self.log("🎟️ No tickets remaining or you're already Champion! Ending PvP session... 🚫🏆😔", Fore.YELLOW)
                         break
 
