@@ -744,7 +744,7 @@ class animix:
                         for pet in available_pets:
                             if (
                                 pet.get("class") == req["class"]
-                                and pet.get("star", 0) == req["star"]
+                                and pet.get("star", 0) >= req["star"]
                                 and pet.get("pet_id") not in pet_ids
                             ):
                                 pet_ids.append(pet["pet_id"])
