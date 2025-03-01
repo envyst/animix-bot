@@ -199,15 +199,15 @@ class animix:
         token_super_counter = 0
 
         while True:
-            if self.token_reguler > 0:
+            if self.token_reguler >= 10:
                 req_url = f"{self.BASE_URL}pet/dna/gacha"
                 headers = {**self.HEADERS, "Tg-Init-Data": self.token}
-                payload = {"amount": 1, "is_super": False}
-            elif self.token_super > 0 and initial_token_super >= 200 and token_super_counter < 200:
+                payload = {"amount": 10, "is_super": False}
+            elif self.token_super >= 10 and initial_token_super >= 200 and token_super_counter < 200:
                 req_url = f"{self.BASE_URL}pet/dna/gacha"
                 headers = {**self.HEADERS, "Tg-Init-Data": self.token}
-                payload = {"amount": 1, "is_super": True}
-                token_super_counter += 1
+                payload = {"amount": 10, "is_super": True}
+                token_super_counter += 10
             else:
                 self.log("🚫 No gacha points remaining. Unable to continue.", Fore.RED)
                 break
