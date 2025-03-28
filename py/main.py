@@ -198,6 +198,7 @@ class animix:
 
         initial_token_super = self.token_super
         token_super_counter = 0
+        blackhole = 0
 
         while True:
             if self.token_reguler >= 10:
@@ -238,6 +239,8 @@ class animix:
                             name = dna_item.get("name", "Unknown")
                             dna_class = dna_item.get("class", "Unknown")
                             star = dna_item.get("star", "Unknown")
+                            if star == 7 or star == "7":
+                                blackhole += 1
                             remaining_points = str(data["result"].get("god_power", 0))
 
                             self.log(f"🧬 Name: {name}", Fore.LIGHTGREEN_EX)
@@ -331,6 +334,8 @@ class animix:
                     self.log(f"❌ Key error: {e}", Fore.RED)
                 except Exception as e:
                     self.log(f"❌ Unexpected error: {e}", Fore.RED)
+                    
+        self.log(f"💸 Got Blackhole: {blackhole}", Fore.LIGHTBLUE_EX)
                     
         # Adding requests to the new API for bonus claims
         for reward_no in [1, 2]:
